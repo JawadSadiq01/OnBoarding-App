@@ -1,35 +1,40 @@
 import React from 'react';
-import { View, Text, StyleSheet, Pressable, Button, Alert } from 'react-native';
+import { View, Text, StyleSheet, Pressable, Button, ToastAndroid, Alert, TouchableOpacity } from 'react-native';
+import Loader from '../helpers/loader';
 
-export default function CustomButton({ placeholder, onPress, type = 'primary' }) {
-
+export default function CustomButton(props: any) {
+  const { placeholder, loading = false, onPress, type = 'primary' } = props;
   return (
     <View style={styles.container}>
-      <Pressable
+      <TouchableOpacity
+        disabled={loading}
         onPress={onPress}
         style={[styles[`button_${type}`]]}
       >
-        <Text style={[styles[`text_${type}`]]} >{placeholder}</Text>
-      </Pressable>
-
+        {loading ?
+          <Loader />
+          :
+          <Text style={[styles[`text_${type}`]]} >{placeholder}</Text>
+        }
+      </TouchableOpacity>
     </View>
   );
 }
-
 
 const styles = StyleSheet.create({
   container: {
     width: "90%",
     marginBottom: 10,
     alignSelf: "center",
-
   },
   button_primary: {
     borderColor: "#f5f5f5",
     borderWidth: 1,
     padding: 14,
     borderRadius: 5,
-    backgroundColor: "#f07d20"
+    height: 50,
+    backgroundColor: "#f07d20",
+    justifyContent: 'center'
 
   },
   button_social_login_google: {

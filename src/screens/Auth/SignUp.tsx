@@ -1,36 +1,49 @@
-import { Alert, Image, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native'
+import { Alert, Image, Pressable, ScrollView, StyleSheet, Text, ToastAndroid, View } from 'react-native'
 import React, { useState } from 'react';
+import { firebase } from '@react-native-firebase/auth';
 import CustomInput from '../../components/CustomInput';
 import CustomButton from '../../components/CustomButton';
 import styles from './styles';
 
-const SignUp = (props) => {
+const SignUp = (props: any) => {
   const { navigation } = props;
-  const [username, setUsername] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState('hdrali036@gmail.com');
+  const [password, setPassword] = useState('12345678');
+  const [loading, setLoading] = useState(false);
   const [check_password, set_check_Password] = useState('');
 
-  const onSignUp = () => {
-    navigation.navigate('SignIn');
+  const onSignUp = async () => {
+    setLoading(true);
+    await firebase.auth().createUserWithEmailAndPassword(email, password).then((res) => {
+      showToast('User registered successfully');
+      console.log(res);
+      setLoading(false);
+      navigation.navigate('login');
+    }).catch((error: any) => {
+      if (error.code === 'auth/email-already-in-use') {
+        showToast('That email address is already in use!');
+      }
+      if (error.code === 'auth/invalid-email') {
+        showToast('That email address is invalid!');
+      }
+      // console.error('Error signing up:', error.message);
+      setLoading(false);
+    });
+
   };
 
-  const social_login = () => {
-    alert("Social API Not Connected");
+  const onLogin = async () => {
+    navigation.navigate('login');
   };
+
+  const showToast = (props: any) => {
+    ToastAndroid.show(props, ToastAndroid.SHORT);
+  };
+
   return (
     <View style={styles.container}>
       <ScrollView>
         <Image style={styles.redmilogo} source={require('../../assets/Images/firebase_logo.png')} />
-        {/* <Text style={{ textAlign: "center", paddingTop: "20%", fontSize: 25, fontWeight: 'bold' }}>Create Account</Text> */}
-        <CustomInput
-          placeholder="Name"
-          value={username}
-          setvalue={setUsername}
-          secureTextEntry={false}
-          heading="Full name"
-        />
-
         <CustomInput
           placeholder="Email"
           value={email}
@@ -62,8 +75,8 @@ const SignUp = (props) => {
           <Text style={{ color: "#f07d20" }}>Privacy Policy</Text>
         </Text>
 
-        <CustomButton placeholder="Sign up" onPress={onSignUp} />
-        <CustomButton placeholder="Already have an account? Sign in. " onPress={onSignUp} type='forget' />
+        <CustomButton placeholder="Sign up" loading={loading} onPress={onSignUp} />
+        <CustomButton placeholder="Already have an account? Sign in. " onPress={onLogin} type='forget' />
       </ScrollView>
     </View>
 
