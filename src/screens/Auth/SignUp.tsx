@@ -1,49 +1,57 @@
-import { Alert, Image, Pressable, ScrollView, StyleSheet, Text, ToastAndroid, View } from 'react-native'
+import { Image, ScrollView, Text, View } from 'react-native'
 import React, { useState } from 'react';
 import { firebase } from '@react-native-firebase/auth';
 import CustomInput from '../../components/CustomInput';
 import CustomButton from '../../components/CustomButton';
 import styles from './styles';
+import { IsValidEmail, IsValidPassword } from '../../components/Validation';
+import ShowToast from '../../components/ShowToast';
 
 const SignUp = (props: any) => {
   const { navigation } = props;
   const [email, setEmail] = useState('hdrali036@gmail.com');
-  const [password, setPassword] = useState('12345678');
+  const [password, setPassword] = useState('12345678A');
   const [loading, setLoading] = useState(false);
-  const [check_password, set_check_Password] = useState('');
+  const [check_password, set_check_Password] = useState('12345678A');
 
   const onSignUp = async () => {
     setLoading(true);
-    await firebase.auth().createUserWithEmailAndPassword(email, password).then((res) => {
-      showToast('User registered successfully');
-      console.log(res);
+    if (!IsValidEmail(email)) {
+      ShowToast('Invalid email address');
       setLoading(false);
-      navigation.navigate('login');
-    }).catch((error: any) => {
-      if (error.code === 'auth/email-already-in-use') {
-        showToast('That email address is already in use!');
-      }
-      if (error.code === 'auth/invalid-email') {
-        showToast('That email address is invalid!');
-      }
-      // console.error('Error signing up:', error.message);
+    } else if (!IsValidPassword(password)) {
+      ShowToast('Week password try a strong one');
       setLoading(false);
-    });
-
+    } else if (password != check_password) {
+      ShowToast('Password does not match');
+      setLoading(false);
+    } else {
+      await firebase.auth().createUserWithEmailAndPassword(email, password).then((res) => {
+        ShowToast('User registered successfully');
+        console.log(res);
+        setLoading(false);
+        navigation.navigate('login');
+      }).catch((error: any) => {
+        if (error.code === 'auth/email-already-in-use') {
+          ShowToast('That email address is already in use!');
+        }
+        if (error.code === 'auth/invalid-email') {
+          ShowToast('That email address is invalid!');
+        }
+        // console.error('Error signing up:', error.message);
+        setLoading(false);
+      });
+    }
   };
 
   const onLogin = async () => {
     navigation.navigate('login');
   };
 
-  const showToast = (props: any) => {
-    ToastAndroid.show(props, ToastAndroid.SHORT);
-  };
-
   return (
     <View style={styles.container}>
       <ScrollView>
-        <Image style={styles.redmilogo} source={require('../../assets/Images/firebase_logo.png')} />
+        <Image style={styles.appLogo} source={require('../../assets/Images/firebase_logo.png')} />
         <CustomInput
           placeholder="Email"
           value={email}
