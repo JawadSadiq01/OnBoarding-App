@@ -59,7 +59,7 @@ const Dashboard = (props: any) => {
             {loading ?
               <Loader />
               :
-              <Text>{token}</Text>
+              <Text style={{ color: "black" }}>{token}</Text>
             }
           </View>
           <CustomButton placeholder="Sign out" onPress={onSignOut} />
