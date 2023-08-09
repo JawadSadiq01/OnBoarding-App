@@ -36,6 +36,7 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     backgroundColor: "#f5f5f5",
     width: "100%",
+    color: 'black',
   }
 
 

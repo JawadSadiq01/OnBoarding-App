@@ -9,10 +9,10 @@ import ShowToast from '../../components/ShowToast';
 
 const SignUp = (props: any) => {
   const { navigation } = props;
-  const [email, setEmail] = useState('hdrali036@gmail.com');
-  const [password, setPassword] = useState('12345678A');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
-  const [check_password, set_check_Password] = useState('12345678A');
+  const [check_password, set_check_Password] = useState('');
 
   const onSignUp = async () => {
     setLoading(true);
