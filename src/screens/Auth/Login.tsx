@@ -10,8 +10,8 @@ import { IsValidEmail, IsValidPassword } from '../../components/Validation';
 const Login = (props: any) => {
 
   const { navigation } = props;
-  const [password, setPassword] = useState('12345678A');
-  const [email, setEmail] = useState('hdrali036@gmail.com');
+  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState('');
   const [loading, setLoading] = useState(false);
 
   const onSignIN = async () => {
