@@ -46,11 +46,12 @@ The entry point of your application.
 npm install
 4. Start the Metro server. Run the Metro server, which bundles and serves your app:
 npm start
-5. npx react-native run-android
-6. Run the application on a Simulator/Device:
+# For Android:
+1. npx react-native run-android
+2. Run the application on a Simulator/Device:
 
 ## For iOS: 
-Use Xcode or the command line to build and run the app on an iOS simulator or device:
+Use Xcode or the command line to build and run the app on an iOS simulator or a device:
 
-pod install
-npx react-native run-ios
+1. pod install
+2. npx react-native run-ios
