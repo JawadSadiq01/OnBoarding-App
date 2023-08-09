@@ -5,20 +5,23 @@ import styles from './styles';
 import Loader from '../../helpers/loader';
 import CustomButton from '../../components/CustomButton';
 import ShowToast from '../../components/ShowToast';
+import { useIsFocused } from "@react-navigation/native";
+
 const Dashboard = (props: any) => {
   const { navigation } = props;
+  const isFocused = useIsFocused();
 
   const [loading, setLoading] = useState(true);
   const [token, setToken] = useState('');
   useEffect(() => {
-    getToken();
-  }, []);
+    GetToken();
+  }, [isFocused]);
 
-  const getToken = async () => {
+  async function GetToken() {
     setLoading(true);
     const user = auth().currentUser;
     if (user) {
-      user.getIdToken()
+      await user.getIdToken()
         .then(idToken => {
           console.log("got idToken")
           setToken(idToken);
