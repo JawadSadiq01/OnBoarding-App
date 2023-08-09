@@ -46,7 +46,7 @@ The entry point of your application.
 npm install
 4. Start the Metro server. Run the Metro server, which bundles and serves your app:
 npm start
-# For Android:
+## For Android:
 1. npx react-native run-android
 2. Run the application on a Simulator/Device:
 
