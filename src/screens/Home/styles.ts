@@ -6,7 +6,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
   },
-  redmilogo: {
+  appLogo: {
     alignSelf: "center",
     width: 300,
     resizeMode: 'contain',
@@ -18,8 +18,10 @@ const styles = StyleSheet.create({
     marginBottom: 50,
   },
   tokenContainer: {
+    alignItems: 'center',
     marginTop: 10,
     marginBottom: 20,
+    width: '90%'
   }
 });
 export default styles;

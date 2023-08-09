@@ -7,7 +7,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flex: 1,
   },
-  redmilogo: {
+  appLogo: {
     alignSelf: "center",
     width: 300,
     resizeMode: 'contain',
